@@ -4,47 +4,22 @@ const User = require('../models/user');
 const CatchAsyncError = require('../utilities/CatchAsyncError')
 const passport = require('passport')
 const session = require('express-session');
+const users = require('../controllers/users')
 
 
 // ********************************************************************register route
-router.get('/register' ,(req,res)=>{
-    res.render('auth/register')
-})
+router.get('/register' ,users.registerUserForm)
 
-router.post('/register' , CatchAsyncError (async(req,res ,next)=>{
-   try {
-        const {username , email , password}=req.body;
-        const user = new User({username , email});
-        const registerUser = await User.register(user,password);
-        req.login(registerUser,err=>{
-            if(err)return next (err)
-            req.flash('success' , 'Welcome to Tcamp')
-            res.redirect('/campgrounds')
-        })
-   } catch (err){
-    req.flash('error' , err.message);
-    res.redirect('/register')
-   }
-}))
+router.post('/register' , CatchAsyncError (users.registeringUser))
 
 // **********************************************************************login route
-router.get('/login' ,(req,res)=>{
-    res.render('auth/login')
-})
+router.get('/login' ,users.loginUser)
 
-router.post('/login' ,passport.authenticate('local' , {failureFlash:true , failureRedirect: '/login'}) , (req,res)=>{
-req.flash('success' , 'Welcome back !');
-const returnUrl = req.session.returnTo || '/campgrounds';
-res.redirect(returnUrl)
-})
+router.post('/login' ,passport.authenticate('local' , {failureFlash:true , failureRedirect: '/login'}) , users.loggingInUser)
 
 
 // *********************************************************************logout route
-router.get('/logout' ,(req,res)=>{
-    req.logout()
-    req.flash('success', "Goodbye!");
-    res.redirect('/campgrounds');
-})
+router.post('/logout' ,users.loggingOutUser)
 
 module.exports=router;
 
