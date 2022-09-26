@@ -1,0 +1,57 @@
+<% layout('layouts/boilerplate') %> 
+    <h1>Register Now !</h1>
+
+
+
+
+
+    <form action="/register" class="validation-form" novalidate method="POST">
+        <div class="mb-3"> 
+            <label class="form-label" for="username">Username</label>
+            <input class="form-control" type="text" name="username" id="username" placeholder="Type a username" required>
+            <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter the username.
+              </div>
+        </div>
+
+        <div class="mb-3"> 
+            <label class="form-label" for="email">Email</label>
+            <input class="form-control" type="email" name="email" id="email" placeholder="Type an email" required>
+            <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter the email.
+              </div>
+        </div>
+
+        <div class="mb-3"> 
+            <label class="form-label" for="password">Password</label>
+            <input class="form-control" type="password" name="password" id="password" placeholder="Type a password" required>
+            <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter the password.
+              </div>
+        </div>
+
+        <button class="mb-3 btn btn-success">Register</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </form>

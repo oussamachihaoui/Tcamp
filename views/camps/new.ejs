@@ -1,0 +1,120 @@
+<% layout('layouts/boilerplate') %> 
+<!-- <div class="d-flex .bg-image  .justify-content-center .align-items-center " 
+style="background-image: url(https://images.unsplash.com/photo-1533873984035-25970ab07461?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1174&q=80);"> -->
+    <div class="row">
+        <h1 class="text-center"> Make a new Campground</h1>
+        <div class="col-6 offset-3">
+        
+            <form action="/campgrounds"  method="POST" novalidate class="validation-form" enctype="multipart/form-data">
+           
+
+
+
+
+
+                <div class="mb-3"> 
+                    <label class="form-label" for="title">Enter the campground's title</label>
+                    <input class="form-control" type="text" name="campground[title]" id="title" placeholder="Type a title" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                      </div>
+                      <div class="invalid-feedback">
+                        Please enter the title.
+                      </div>
+                </div>
+                    
+
+                <div class="mb-3">
+                    <label class="form-label" for="location">Enter the campground's location</label>
+                        <input class="form-control" type="text" name="campground[location]" id="location" placeholder="Type a location" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                          </div>
+                          <div class="invalid-feedback">
+                            Please enter the location.
+                          </div>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="image" class="form-label">Upload image(s)</label>
+                      <input class="form-control" type="file" id="image" name="image" multiple >
+                    </div>
+                   
+                    <div class="invalid-feedback">
+                      Please upload the image(s).
+                    </div>
+                <!-- <div class="mb-3">
+                    <label class="form-label" for="image">Enter the campground's image URL</label>
+                    <input class="form-control" type="text" name="campground[image]" id="image" placeholder="Type the Url" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                      </div>
+                      <div class="invalid-feedback">
+                        Please enter the image Url.
+                      </div>
+                </div> -->
+
+                    <div class="mb-3">
+                        <label class="form-label" for="price"> Campground price</label>
+                        <div class="input-group ">
+                            <span class="input-group-text" id="price-label">Dt</span>
+                            <input type="text" class="form-control" placeholder="0.00" aria-label="price" aria-describedby="price-label" id="price" name="campground[price]" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                              </div>
+                              <div class="invalid-feedback">
+                                Please enter the Price.
+                              </div>
+                        </div>
+                    </div>
+
+                <!-- <div class="mb-3">
+                    <label class="form-label" for="description">Enter the campground's description</label>
+                    <textarea class="form-control" type="text" name="description" id="description" placeholder="Type the description" required> </textarea>
+                </div> -->
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" placeholder="Type the description" name="campground[description]" required></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                      </div>
+                    <div class="invalid-feedback">
+                      Please enter a message in the description.
+                    </div>
+                  </div>
+
+                <div class="mb-3">
+                    <button class="btn btn-primary">Add the campground</button>
+                </div>
+                
+        
+                
+    
+    
+    
+    
+    
+            </form>
+    
+    
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
