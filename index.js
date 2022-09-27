@@ -109,28 +109,19 @@ app.get('/home' ,( req , res)=>{
 
 // for all routes
 app.all('*' ,( req , res , next)=>{
-    next( new ExpressError ('Error' , 404))
+    next( new ExpressError ('Unavaiblable page' , 404))
 })
 
 //Error handling
 app.use((err , req , res, next)=>{
         const {status = 500} = err;
-        if(!err.message) 
+        if(!err.message) err.message='Oh no something went wrong'
         res.status(status).render('error' , {err});
     
 })
 
 
 
-// app.get('/makecamp' ,async(req,res)=> {
-//     const camp = new Campground ({
-//         title : 'Ghar Milh',
-//         price :'30Dt per night',
-//         description :'One of the best camping sites near the sea',
-//     })
-//     await camp.save();
-//     res.send(camp)
-// })
 
 
 

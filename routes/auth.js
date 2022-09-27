@@ -19,7 +19,7 @@ router.post('/login' ,passport.authenticate('local' , {failureFlash:true , failu
 
 
 // *********************************************************************logout route
-router.post('/logout' ,users.loggingOutUser)
+router.get('/logout' ,users.loggingOutUser)
 
 module.exports=router;
 

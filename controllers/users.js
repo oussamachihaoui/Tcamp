@@ -34,8 +34,14 @@ module.exports.loggingInUser=(req,res)=>{
 }
 
 
-module.exports.loggingOutUser=(req,res)=>{
-    req.logout()
-    req.flash('success', "logged Out");
-    res.redirect('/campgrounds');
+module.exports.loggingOutUser=function(req,res,next){
+    req.logout(function(err){
+        if (err){
+            return next(err);
+        }
+        req.flash('success', "logged Out");
+        res.redirect('/campgrounds');
+    });  
 }
+
+
