@@ -10,6 +10,8 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport')
 const localStrategy = require('passport-local');
+const mongoSanitize = require('express-mongo-sanitize');
+
 
 
 mongoose.connect('mongodb://localhost:27017/camp',{
@@ -27,7 +29,7 @@ mongoose.connect('mongodb://localhost:27017/camp',{
 // require data  & functions from other directories
 const ExpressError = require('./utilities/ExpressError');
 const CatchAsyncError = require('./utilities/CatchAsyncError');
-const {reviewSchema}=require('./schemaJoi')//-->not used yet
+const {campgroundSchema}=require('./schemaJoi')//-->not used yet
 const User = require('./models/user');
 
 
@@ -44,16 +46,18 @@ app.use(methodOverride('_method'));
 const Joi = require('joi');//---> not used yet
 app.use(express.static('public'))
 const sessionSettings={
+    name :'tcamp',
     secret : '123456789',
     resave : false,
     saveUninitialized: true,
     cookie : {
         httpOnly : true,
+        //secure : true,
         expires : Date.now() + 1000*60*60*24*7,
         maxAge : 1000*60*60*24*14,
     }
 }
-// flash & session & passport
+// flash & session & passport & mongo_sanitize & helmet
 app.use(session(sessionSettings));
 app.use(flash());
 
@@ -62,19 +66,13 @@ app.use(passport.session())
 passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+app.use(mongoSanitize());
 
 
 
-//**********************************************************defining middleware functions********************************************************
-// const validateReview = async (req,res,next)=>{
-//     const {error} = reviewSchema.validate(req.body);
-//     if (error){
-//         const msg = error.details.map(e=> e.message).join(',')
-//         throw new ExpressError(msg , 400)
-//     } else {
-//         next();
-//     }
-// }
+
+
+
 // flash middleware & global locals
 app.use((req,res,next)=>{
     res.locals.currentUser=req.user;
@@ -119,16 +117,6 @@ app.use((err , req , res, next)=>{
         res.status(status).render('error' , {err});
     
 })
-
-
-
-
-
-
-
-
-
-
 
 // localhost port
 app.listen(3000 ,()=>{

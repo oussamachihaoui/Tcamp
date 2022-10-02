@@ -5,11 +5,27 @@ const CatchAsyncError = require('../utilities/CatchAsyncError');
 const isLoggedIn = require('../isloginmidware');
 const { populate } = require('../models/campground');
 const campgrounds = require('../controllers/campgrounds')
+const {campgroundSchema}=require('../schemaJoi')
+const ExpressError = require('../utilities/ExpressError');
 //************************************************************************************** */
 const {storage} = require('../cloudinary')
 const multer  = require('multer');
 const upload = multer({ storage });
 const cloudinary = require('../cloudinary');
+
+
+
+// validate middleware
+const validateCampground = (req, res, next) => {
+    const { error } = campgroundSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400)
+    } else {
+        next();
+    }
+}
+
 
 // creating index template
 router.get('/' , CatchAsyncError (campgrounds.index))
@@ -17,7 +33,7 @@ router.get('/' , CatchAsyncError (campgrounds.index))
 //make a new campground
 router.get('/newcamp', isLoggedIn,campgrounds.createCampForm)
 
-router.post('/' ,upload.array('image'), CatchAsyncError (campgrounds.createCamp))
+router.post('/' ,upload.array('image'), validateCampground, CatchAsyncError (campgrounds.createCamp))
 
 //***************************************************************************************************************** */
 // show all campgrounds
@@ -29,7 +45,7 @@ router.get('/:id' , CatchAsyncError (campgrounds.showCampground))
 
 router.get('/:id/edit' ,isLoggedIn,  CatchAsyncError (campgrounds.editCampForm)) 
 
-router.put('/:id',upload.array('image'),isLoggedIn, CatchAsyncError (campgrounds.updatedCamp))
+router.put('/:id',upload.array('image'),isLoggedIn,validateCampground, CatchAsyncError (campgrounds.updatedCamp))
 
 //*********************************************************************************************************** */
 
