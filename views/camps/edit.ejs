@@ -10,7 +10,7 @@
 
     <div class="row">
         <h1 class="text-center"> Edit a Campground</h1>
-        <div class="col-6 offset-3">
+        <div class="col-md-6 offset-md-3">
         
             <form action="/campgrounds/<%= foundCamp._id %>?_method=PUT "  method="POST" novalidate class="validation-form" enctype="multipart/form-data">
            
@@ -66,23 +66,20 @@
                 </div>
 
                 <div class="mb-3">
-                    <% foundCamp.images.forEach(function(img,i){ %> 
-                        <img src="<%= img.url %> " alt="" class="img-thumbnail">
-                        <div class="form-check-inline">
-                            <input type="checkbox" name="deletedImages" id="image-<%= i %> " value="<%= img.filename %> ">
-                        </div>
-                        <label for="image-<%= i %> ">Delete</label>
-                     <% }) %> 
+                    <% foundCamp.images.forEach(function(img, i) {  %>
+                    <img src="<%=img.thumbnail %>" class="img-thumbnail" alt="">
+                    <div class="form-check-inline">
+                        <input type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%=img.filename%>">
+                    </div>
+                    <label for="image-<%=i%>">Delete?</label>
+                    <% })%>
                 </div>
-
                 <div class="mb-3">
                     <button class="btn btn-success">Update the campground</button>
                 </div>
                 
         
-                <div>
-                    <a href="/campgrounds/<%= foundCamp._id %> ">View updated campground</a>
-                </div>
+              
         
     
     

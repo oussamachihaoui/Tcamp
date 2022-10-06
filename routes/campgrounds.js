@@ -33,7 +33,7 @@ router.get('/' , CatchAsyncError (campgrounds.index))
 //make a new campground
 router.get('/newcamp', isLoggedIn,campgrounds.createCampForm)
 
-router.post('/' ,upload.array('image'), validateCampground, CatchAsyncError (campgrounds.createCamp))
+router.post('/' ,upload.array('image'), CatchAsyncError (campgrounds.createCamp))
 
 //***************************************************************************************************************** */
 // show all campgrounds
@@ -45,7 +45,7 @@ router.get('/:id' , CatchAsyncError (campgrounds.showCampground))
 
 router.get('/:id/edit' ,isLoggedIn,  CatchAsyncError (campgrounds.editCampForm)) 
 
-router.put('/:id',upload.array('image'),isLoggedIn,validateCampground, CatchAsyncError (campgrounds.updatedCamp))
+router.put('/:id',upload.array('image'),isLoggedIn, CatchAsyncError (campgrounds.updatedCamp))
 
 //*********************************************************************************************************** */
 

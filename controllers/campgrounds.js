@@ -2,6 +2,7 @@ const Campground = require('../models/campground');
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding')
 const mapBoxToken = process.env.MAPBOX_TOKEN;
 const geoCodingClient= mbxGeocoding({ accessToken: mapBoxToken });
+const cloudinary = require('cloudinary').v2;
 
 module.exports.index=async(req,res)=>{
     const campGrounds = await Campground.find({});
@@ -73,25 +74,26 @@ module.exports.updatedCamp=async (req,res)=>{
        return res.redirect(`/campgrounds/${id}`)
     }
 
-    const updated = await Campground.findByIdAndUpdate( id , {...req.body.campground})
-    const imgs = req.files.map(f=>({url : f.path , filename : f.filename}));
+    const updated = await Campground.findByIdAndUpdate(id, { ...req.body.campground });
+    const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
     updated.images.push(...imgs);
-    await updated.save()
+    await updated.save();
     if (req.body.deleteImages) {
-        for (let filename of req.body.deleteImages) {
-            //logs cloudinary conataining uploader, still uploader is undefined
-            console.log(cloudinary,cloudinary.uploader); 
-            await cloudinary.uploader.destroy(filename);
+        for (let img of req.body.deleteImages) {
+            await cloudinary.uploader.destroy(img);
         }
-        await updated.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } })
+        await updated.updateOne({ $pull: { images: { filename: { $in: req.body.deletedImages } } } })
     }
-    
     req.flash('success' , ' Successfully updated a campground')
     res.redirect(`/campgrounds/${updated._id}`)
 }
 //**************************************************************************** */
 module.exports.deleteCamp=async(req,res)=>{
     const {id} = req.params;
+    const campground = await Campground.findById(id);
+    campground.images.map((image) => {
+        cloudinary.uploader.destroy(image.filename);
+    });
     await Campground.findByIdAndDelete(id);
     req.flash('success' , ' Successfully deleted a campground')
     res.redirect('/campgrounds');

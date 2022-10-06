@@ -2,6 +2,9 @@ const User = require('../models/user');
 
 
 module.exports.registerUserForm = (req,res)=>{
+    if (req.isAuthenticated()) {
+        return res.redirect('/campgrounds');
+    }
     res.render('auth/register')
 }
 
@@ -24,12 +27,16 @@ module.exports.registeringUser  = async(req,res ,next)=>{
 
 
 module.exports.loginUser =(req,res)=>{
+    if (req.isAuthenticated()) {
+        return res.redirect('/campgrounds');
+    }
     res.render('auth/login')
 }
 
 module.exports.loggingInUser=(req,res)=>{
     req.flash('success' , 'Welcome back !');
     const returnUrl = req.session.returnTo || '/campgrounds';
+    delete req.session.returnTo;
     res.redirect(returnUrl)
 }
 

@@ -43,7 +43,7 @@
                </ul>
                <% if( currentUser && foundCamp.owner.equals(currentUser._id)) { %> 
                <div class="card-body">
-                  <a  class="card-link btn btn-primary" href="/campgrounds/<%= foundCamp._id %>/edit ">Update a camp</a>
+                  <a  class="card-link btn btn-primary" href="/campgrounds/<%= foundCamp._id %>/edit ">Edit the campground</a>
                   <form  class="d-inline" action="/campgrounds/<%= foundCamp._id %>?_method=DELETE  " method="post">
        
                      <button class="btn btn-danger">Delete a campground</button>
@@ -64,7 +64,7 @@
 
 
       <div class="col-6">
-         <div id='map' style='width: 600px; height: 300px;'></div>
+         <div id='map'></div>
          <% if (currentUser) {%> 
          <h3>Add a Review</h3>
             

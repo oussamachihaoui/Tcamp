@@ -11,7 +11,7 @@ const flash = require('connect-flash');
 const passport = require('passport')
 const localStrategy = require('passport-local');
 const mongoSanitize = require('express-mongo-sanitize');
-
+// const mongoDB = process.env.MONGO_DB
 
 
 mongoose.connect('mongodb://localhost:27017/camp',{
@@ -75,6 +75,9 @@ app.use(mongoSanitize());
 
 // flash middleware & global locals
 app.use((req,res,next)=>{
+    if (!['/login', '/register', '/'].includes(req.originalUrl)) {
+        req.session.returnTo = req.originalUrl;
+    }
     res.locals.currentUser=req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
