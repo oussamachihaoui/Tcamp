@@ -5,12 +5,6 @@
       <div class="col-6">
          
          <div id="campgroundCarousel" class="carousel slide " data-bs-ride="carousel">
-            <!-- <div class="carousel-indicators">
-               <button type="button" data-bs-target="#campgroundCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-               <button type="button" data-bs-target="#campgroundCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-               
-               <button type="button" data-bs-target="#campgroundCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-             </div> -->
             <div class="carousel-inner">
                <% foundCamp.images.forEach((img , i)=>{ %> 
               <div class="carousel-item active <%= i ===0 ? 'active' : '' %>  " >
@@ -69,10 +63,6 @@
          <h3>Add a Review</h3>
             
           <form action="/campgrounds/<%= foundCamp._id %>/reviews " class="mb-3 validation-form " method="post" novalidate>
-            <!-- <div class="mb-3">
-               <label class="form-label" for="rating">Rating</label>
-               <input class="form-range" type="range" name="review[rating]" id="rating" min="0" max="5">
-            </div> -->
             <div class="mb-3">
                <fieldset class="starability-grow">
                   <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." />
